@@ -62,7 +62,7 @@ def is_service_ok (hostedService):
         instanceCount += 1
         if (instance.instance_status not in instanceOkStatus):
             instancesInBadState += 1
-    print('Total instances: {0}'.format(instanceCount))
+    print('Total instances: {0}| instances.total={0}'.format(instanceCount))
     for key in instancesStatus:
         print('{0}: {1}'.format(str(key), instancesStatus[key]))
     if (instancesInBadState > instanceCount / 2):
