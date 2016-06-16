@@ -64,7 +64,7 @@ def is_service_ok (hostedService):
             instancesInBadState += 1
     print('Total instances: {0}| instances.total={0}'.format(instanceCount))
     for key in instancesStatus:
-        print('{0}: {1}'.format(str(key), instancesStatus[key]))
+        print('{0}: {1}|instances.{0}={1}'.format(str(key), instancesStatus[key]))
     if (instancesInBadState > instanceCount / 2):
         print('Total instances in bad state: {0}'.format(instancesInBadState))
         return False
