@@ -46,7 +46,7 @@ def handle_args():
 
 def is_service_ok (hostedService):
     serviceOkStatus = ["Created"]
-    deploymentOkStatus = ["Running", "RunningTransitioning"]
+    deploymentOkStatus = ["Running", "RunningTransitioning", "RoleStateUnknown"]
     instanceOkStatus = ["ReadyRole"]
     if (hostedService.serviceStatus not in serviceOkStatus):
         print ('Service status: {0}'.format(hostedService.serviceStatus))
