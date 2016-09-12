@@ -18,3 +18,8 @@ $ node app.js [Options] -- <api_key> <api_secret> <funnel_id>
 - -s, --step=NUMBER+     Step indexes to check, default is last step
 - -o, --overall-ratio      use overall ratio instead of step ratio
 - -h, --help               display this help           
+
+### Example
+```
+mixpanel-funnel/app.js '-i' '14' '-w' '75' '-c' '60' -s '2' -s '4' -- 'SOME_API_KEY' 'SOME_API_SECRET' 'SOME_FUNNEL_ID'
+```
