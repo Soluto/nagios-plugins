@@ -52,7 +52,7 @@ getFunnel(panel, funnelId, interval).then(steps => {
         const state = o.checkThreshold(result);
         o.addMessage(state, index + ' result was: ' + result);
         o.addPerfData({
-            label : `step[${index}]: ${steps[index].name}`,
+            label : `step_${index}-${steps[index].name}`,
             value : result,
             uom : "%",
             threshold : o.threshold,
