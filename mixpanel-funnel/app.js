@@ -22,8 +22,8 @@ const o = new Plugin({
     shortName : 'get_funnel'
 });
 
-const critical = args.options.critical || 70;
-const warning = args.options.warning || 85;
+const critical = Number(args.options.critical || 70);
+const warning = Number(args.options.warning || 85);
 
 const thresholdPrefix = (critical < warning ? '@' : '');
 o.setThresholds({
@@ -49,13 +49,14 @@ getFunnel(panel, funnelId, interval).then(steps => {
     const indexes = args.options.step || [steps.length - 1];
     indexes.forEach(index => {
         const result = steps[index][ratio] * 100;
+        const roundedResult = Math.round(result * 100)/100;
         const state = o.checkThreshold(result);
-        o.addMessage(state, index + ' result was: ' + result);
+        o.addMessage(state, `step[${index}]: ${roundedResult}%`);
         o.addPerfData({
-            label : `step_${index}-${steps[index].name}`,
+            label : `step-${index}_${steps[index].name}`,
             value : result,
             uom : "%",
-            threshold : o.threshold,
+            threshold : {critical, warning},
             min : 0
         });
     });
