@@ -18,7 +18,7 @@ if (args.argv.length < 3) {
 }
 
 const Plugin = require('nagios-plugin');
-const o = new Plugin({
+const funnelPlugin = new Plugin({
     shortName : 'get_funnel'
 });
 
@@ -26,7 +26,7 @@ const critical = Number(args.options.critical || 70);
 const warning = Number(args.options.warning || 85);
 
 const thresholdPrefix = (critical < warning ? '@' : '');
-o.setThresholds({
+funnelPlugin.setThresholds({
     'critical' : thresholdPrefix + critical,
     'warning' : thresholdPrefix + warning
 });
@@ -49,14 +49,14 @@ getFunnel(panel, funnelId, interval).then(steps => {
     const indexes = args.options.step || [steps.length - 1];
     indexes.forEach(index => {
         if (index < 0 || index >= steps.length) {
-            o.addMessage(p.states.UNKNOWN, `step[${index}]: step not found in funnel`);
+            funnelPlugin.addMessage(funnelPlugin.states.UNKNOWN, `step[${index}]: step not found in funnel`);
             return;
         }
         const result = steps[index][ratio] * 100;
         const roundedResult = Math.round(result * 100)/100;
-        const state = o.checkThreshold(result);
-        o.addMessage(state, `step[${index}]: ${roundedResult}%`);
-        o.addPerfData({
+        const state = funnelPlugin.checkThreshold(result);
+        funnelPlugin.addMessage(state, `step[${index}]: ${roundedResult}%`);
+        funnelPlugin.addPerfData({
             label : `step-${index}_${steps[index].name}`,
             value : result,
             uom : "%",
@@ -64,6 +64,6 @@ getFunnel(panel, funnelId, interval).then(steps => {
             min : 0
         });
     });
-    const messageObj = o.checkMessages();
-    o.nagiosExit(messageObj.state, messageObj.message);
+    const messageObj = funnelPlugin.checkMessages();
+    funnelPlugin.nagiosExit(messageObj.state, messageObj.message);
 });
