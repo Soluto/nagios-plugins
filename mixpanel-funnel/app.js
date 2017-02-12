@@ -48,6 +48,10 @@ const ratio = args.options['overall-ratio'] ? 'overallRatio' : 'stepRatio';
 getFunnel(panel, funnelId, interval).then(steps => {
     const indexes = args.options.step || [steps.length - 1];
     indexes.forEach(index => {
+        if (index < 0 || index >= steps.length) {
+            o.addMessage(p.states.UNKNOWN, `step[${index}]: step not found in funnel`);
+            return;
+        }
         const result = steps[index][ratio] * 100;
         const roundedResult = Math.round(result * 100)/100;
         const state = o.checkThreshold(result);
