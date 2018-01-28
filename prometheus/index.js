@@ -4,9 +4,9 @@ const querystring = require('querystring');
 const Plugin = require('nagios-plugin');
 const package = require('./package.json');
 
-let endpoint, query;
+let query;
 
-const funnelPlugin = new Plugin({
+const nagiosPlugin = new Plugin({
   shortName: 'prometheus'
 });
 
@@ -24,7 +24,7 @@ function checkArgument(name, value) {
   if (typeof value === 'undefined') {
     console.error(`missing ${name} argument`);
     program.outputHelp();
-    process.exit(funnelPlugin.states.UNKNOWN);
+    process.exit(nagiosPlugin.states.UNKNOWN);
   }
 }
 
@@ -35,7 +35,7 @@ const critical = Number(program.critical);
 const warning = Number(program.warning);
 
 const thresholdPrefix = (critical < warning ? '@' : '');
-funnelPlugin.setThresholds({
+nagiosPlugin.setThresholds({
   'critical': thresholdPrefix + critical,
   'warning': thresholdPrefix + warning
 });
@@ -43,7 +43,7 @@ funnelPlugin.setThresholds({
 function handleResponse(response) {
   if (response.data.status !== 'success') {
     console.error('Prometheus responded with an error', JSON.stringify(response.data));
-    process.exit(funnelPlugin.states.UNKNOWN);
+    process.exit(nagiosPlugin.states.UNKNOWN);
   }
 
   const data = response.data.data;
@@ -51,12 +51,12 @@ function handleResponse(response) {
 
   if (resultType !== 'scalar') {
     console.error(`Please provide a query that results in scalar instead of ${resultType}`);
-    process.exit(funnelPlugin.states.UNKNOWN);
+    process.exit(nagiosPlugin.states.UNKNOWN);
   }
 
-  const state = funnelPlugin.checkThreshold(result);
-  funnelPlugin.addMessage(state, `value: ${result}%`);
-  funnelPlugin.addPerfData({
+  const state = nagiosPlugin.checkThreshold(result);
+  nagiosPlugin.addMessage(state, `value: ${result}%`);
+  nagiosPlugin.addPerfData({
       label : 'value',
       value : result,
       threshold : {critical, warning},
@@ -76,5 +76,5 @@ instance.get(`/api/v1/query?${querystring.stringify(queryParams)}`)
   .then(handleResponse)
   .catch((err) => {
     console.error('Unexpected error has occured', err.message || err);
-    process.exit(funnelPlugin.states.UNKNOWN);
+    process.exit(nagiosPlugin.states.UNKNOWN);
   });
