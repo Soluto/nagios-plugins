@@ -15,6 +15,7 @@ program
   .option('-e, --endpoint <prometheus_endpoint>', 'Prometheus endpoint (required)')
   .option('-w, --warning <warning>', 'Warning threshold', 0)
   .option('-c, --critical <critical>', 'Critical threshold', 0)
+  .option('-u, --unit', 'Metric unit - display only (optional)')
   .option('-t, --time <rfc3339 | unix_timestamp>', 'Evaluation timestamp (optional)')
   .arguments('<query>')
   .action(q => query = q)
@@ -31,6 +32,7 @@ function checkArgument(name, value) {
 checkArgument('query', query);
 checkArgument('endpoint', program.endpoint);
 
+const unit = program.unit || '';
 const critical = Number(program.critical);
 const warning = Number(program.warning);
 
@@ -40,6 +42,17 @@ nagiosPlugin.setThresholds({
   'warning': thresholdPrefix + warning
 });
 
+function addValue(value, label) {
+  const state = nagiosPlugin.checkThreshold(value);
+  console.log(`${state} - ${label}: ${value}${unit}`);
+  nagiosPlugin.addMessage(state, `${label}: ${value}${unit}`);
+  nagiosPlugin.addPerfData({
+    label,
+    value,
+    threshold: { critical, warning },
+  });
+}
+
 function handleResponse(response) {
   if (response.data.status !== 'success') {
     console.error('Prometheus responded with an error', JSON.stringify(response.data));
@@ -47,20 +60,22 @@ function handleResponse(response) {
   }
 
   const data = response.data.data;
-  const { resultType, result: [_, result] } = response.data.data
+  const { resultType, result } = response.data.data
 
-  if (resultType !== 'scalar') {
-    console.error(`Please provide a query that results in scalar instead of ${resultType}`);
-    process.exit(nagiosPlugin.states.UNKNOWN);
+  switch (resultType) {
+    case 'scalar':
+      addValue(result[1], 'value');
+      break;
+    case 'vector':
+      result.forEach(({metric, value}) => addValue(value[1], JSON.stringify(metric)));
+      break;
+    default:
+      {
+        console.error(`This plugin does cannot handle results of type ${resultType}`);
+        process.exit(nagiosPlugin.states.UNKNOWN);
+      }
+      break;
   }
-
-  const state = nagiosPlugin.checkThreshold(result);
-  nagiosPlugin.addMessage(state, `value: ${result}%`);
-  nagiosPlugin.addPerfData({
-      label : 'value',
-      value : result,
-      threshold : {critical, warning},
-  });
 }
 
 const instance = axios.create({
