@@ -44,7 +44,6 @@ nagiosPlugin.setThresholds({
 
 function addValue(value, label) {
   const state = nagiosPlugin.checkThreshold(value);
-  console.log(`${state} - ${label}: ${value}${unit}`);
   nagiosPlugin.addMessage(state, `${label}: ${value}${unit}`);
   nagiosPlugin.addPerfData({
     label,
