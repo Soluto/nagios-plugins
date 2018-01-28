@@ -1,0 +1,10 @@
+{
+  "name": "icinga-prometheus-check",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "commander": "^2.13.0",
+    "nagios-plugin": "^0.1.2"
+  }
+}
