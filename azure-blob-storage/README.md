@@ -21,7 +21,7 @@ $ node app.js [Options] -- <api_key> <api_secret> <funnel_id>
 
 ### Example
 ```
-azure-blob-storage/index.js '-c' 'container-name' '-s' 'storage-account' '-t' '?sv=k2192jf90qjwfi0q' -p 'daily-backup' -d '1'
+azure-blob-storage/index.js '-c' 'container-name' '-s' 'storage-account' '-t' '?sv=k2192jf90qjwfi0q' -p 'blob-name-prefix' -d '1'
 ```
 
 
