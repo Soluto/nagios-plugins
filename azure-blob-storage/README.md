@@ -1,3 +1,6 @@
+#Description
+This plugin verify that there are blobs that was modified in the last *X* days
+
 # Prerequisites
 You  should have Node.js > 7.8 installed.
 
@@ -16,7 +19,7 @@ $ node app.js [Options] -- <api_key> <api_secret> <funnel_id>
 - -s, --storageAccount=STRING   The name of the storage account
 - -t, --token=STRING  SAS token
 - -p, --filePrefix=STRING   Blobs prefix
-- -d, --daysBack      Search for blobs that modified in the last X days
+- -d, --daysBack      Days back to check
 - -h, --help               display this help           
 
 ### Example

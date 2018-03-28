@@ -46,28 +46,23 @@ async function run() {
     var blobUri = 'https://' + args.options.storageAccount + '.blob.core.windows.net';
     let blobService = azure.createBlobServiceWithSas(blobUri, args.options.token);
 
-    let entities = [];
+    let entries = [];
     let first = true;
     let continuationToken;
     while (continuationToken || first) {
         first = false;
         let result = await promsifiedListBlobsSegmentedWithPrefix(blobService, args.options.container, args.options.filePrefix, continuationToken);
-        entities = entities.concat(result.entries);
+        entries = entries.concat(result.entries.filter(entry => moment(entry.lastModified) > moment().subtract(args.options.daysBack, 'd')));
         continuationToken = result.continuationToken;
     }      
-    
-    entities = entities.filter(entity => moment(entity.lastModified) > moment().subtract(args.options.daysBack, 'd'));
 
-    if (entities.length === 0) {
+    if (entries.length === 0) {
         plugin.nagiosExit(plugin.states.CRITICAL, `Didn't find any blobs with prefix *${args.options.filePrefix}* that was modified in the last *${args.options.daysBack}* days`);
     } else {
-        return entities.length;
+        return entries.length;
     }
 }
 
-try {
-    var results = run();
-    plugin.nagiosExit(plugin.states.OK, `Found ${results} matching blobs`);
-} catch (err) {
-    plugin.nagiosExit(plugin.states.UNKNOWN, err);
-}
+run()
+    .then(foundEntities => plugin.nagiosExit(plugin.states.OK, `Found ${foundEntities} matching blobs matching pattern`))
+    .catch(err => plugin.nagiosExit(plugin.states.UNKNOWN, err));
