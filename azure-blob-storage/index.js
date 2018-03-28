@@ -7,7 +7,7 @@ let plugin = new NagiosPlugin({
     shortName: 'azure_blobs'
 });
 
-getOptInstance = getOpt
+_opt = getOpt
 .create([['s', 'storageAccount=<STRING>', 'Storage account name']
     , ['c', 'container=<STRING>', 'Container name']
     , ['t', 'token=<STRING>', 'SAS token with read access to the desired container']
@@ -17,16 +17,18 @@ getOptInstance = getOpt
 .bindHelp()
 .setHelp('Usage: node index.js\n[[OPTIONS]]')
 
-const args = getOptInstance.parseSystem();
+const args = _opt.parseSystem();
 
-function verify_args(_getopt, args) {
-    for (arg of args) {
+function verify_args(_args) {
+    for (arg of _args) {
         if (!arg) {
-            console.log(_getopt.getHelp());
+            console.log(_opt.getHelp());
             process.exit(1);
         }
     }
 }
+
+verify_args([args.options.storageAccount, args.options.container, args.options.token, args.options.filePrefix, args.options.daysBack])
 
 const promsifiedListBlobsSegmentedWithPrefix = async (blobService, container, filePrefix, continuationToken) => {
     return new Promise((resolve, reject) => {
@@ -41,8 +43,6 @@ const promsifiedListBlobsSegmentedWithPrefix = async (blobService, container, fi
 }
 
 async function run() {    
-    verify_args(getOptInstance, [args.options.storageAccount, args.options.container, args.options.token, args.options.filePrefix, args.options.daysBack])
-
     var blobUri = 'https://' + args.options.storageAccount + '.blob.core.windows.net';
     let blobService = azure.createBlobServiceWithSas(blobUri, args.options.token);
 
