@@ -1,5 +1,5 @@
 #Description
-This plugin verify that there are blobs that was modified in the last *X* days
+Check that a given container contains files that were updated in the last X days
 
 # Prerequisites
 You  should have Node.js > 7.8 installed.
