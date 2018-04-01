@@ -13,6 +13,8 @@ _opt = getOpt
     , ['t', 'token=<STRING>', 'SAS token with read access to the desired container']
     , ['p', 'filePrefix=<STRING>', 'File prefix']
     , ['d', 'daysBack=<STRING>', 'Days backs to search blobs']
+    , ['w', 'warningCount=<NUMBER>', 'Warning count']
+    , ['cr', 'criticalCount=<NUMBER>', 'Critical count']
     , ['h', 'help', 'display this help']])
 .bindHelp()
 .setHelp('Usage: node index.js\n[[OPTIONS]]')
@@ -28,7 +30,7 @@ function verify_args(_args) {
     }
 }
 
-verify_args([args.options.storageAccount, args.options.container, args.options.token, args.options.filePrefix, args.options.daysBack])
+verify_args([args.options.storageAccount, args.options.container, args.options.token, args.options.filePrefix, args.options.daysBack, args.options.criticalCount, args.options.warningCount])
 
 const promsifiedListBlobsSegmentedWithPrefix = async (blobService, container, filePrefix, continuationToken) => {
     return new Promise((resolve, reject) => {
@@ -56,11 +58,24 @@ async function run() {
         continuationToken = result.continuationToken;
     }      
 
-    if (entries.length === 0) {
-        plugin.nagiosExit(plugin.states.CRITICAL, `Didn't find any blobs with prefix *${args.options.filePrefix}* that was modified in the last *${args.options.daysBack}* days`);
+    const alertOnMissingBlob = args.options.criticalCount < args.options.warningCount;
+    const outputMessage = `Found *${entities.length}* blobs with *${args.options.filePrefix}* prefix from the last *${args.options.daysBack}* days`;
+
+    if (alertOnMissingBlob) {
+        if (args.options.criticalCount > entities.length) {
+            plugin.nagiosExit(plugin.states.CRITICAL, outputMessage);
+        } else if (args.options.warningCount > entities.length) {
+            plugin.nagiosExit(plugin.states.WARNING, outputMessage);
+        }
     } else {
-        return entries.length;
+        if (args.options.criticalCount < entities.length) {
+            plugin.nagiosExit(plugin.states.CRITICAL, outputMessage);
+        } else if (args.options.warningCount < entities.length) {
+            plugin.nagiosExit(plugin.states.WARNING, outputMessage);
+        }
     }
+
+    return entries.length;
 }
 
 run()
