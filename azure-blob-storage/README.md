@@ -20,17 +20,11 @@ $ node app.js [Options] -- <api_key> <api_secret> <funnel_id>
 - -t, --token=STRING  SAS token
 - -p, --filePrefix=STRING   Blobs prefix
 - -d, --daysBack      Days back to check
+- -w, --warningCount    Warning count
+- -x, --criticalCount  Critical count
 - -h, --help               display this help           
 
 ### Example
 ```
-azure-blob-storage/index.js '-c' 'container-name' '-s' 'storage-account' '-t' '?sv=k2192jf90qjwfi0q' -p 'blob-name-prefix' -d '1'
+azure-blob-storage/index.js '-c' 'container-name' '-s' 'storage-account' '-t' '?sv=k2192jf90qjwfi0q' -p 'blob-name-prefix' -d '1' -x '1' -w '2'
 ```
-
-
-['s', 'storageAccount=<STRING>', 'Storage account name']
-    , ['c', 'container=<STRING>', 'Container name']
-    , ['t', 'token=<STRING>', 'SAS token with read access to the desired container']
-    , ['p', 'filePrefix=<STRING>', 'File prefix']
-    , ['d', 'daysBack=<STRING>', 'Days backs to search blobs']
-    , ['h', 'help', 'display this help']])

@@ -14,7 +14,7 @@ _opt = getOpt
     , ['p', 'filePrefix=<STRING>', 'File prefix']
     , ['d', 'daysBack=<STRING>', 'Days backs to search blobs']
     , ['w', 'warningCount=<NUMBER>', 'Warning count']
-    , ['cr', 'criticalCount=<NUMBER>', 'Critical count']
+    , ['x', 'criticalCount=<NUMBER>', 'Critical count']
     , ['h', 'help', 'display this help']])
 .bindHelp()
 .setHelp('Usage: node index.js\n[[OPTIONS]]')
@@ -59,18 +59,18 @@ async function run() {
     }      
 
     const alertOnMissingBlob = args.options.criticalCount < args.options.warningCount;
-    const outputMessage = `Found *${entities.length}* blobs with *${args.options.filePrefix}* prefix from the last *${args.options.daysBack}* days`;
+    const outputMessage = `Found *${entries.length}* blobs with *${args.options.filePrefix}* prefix that modified in the last *${args.options.daysBack}* days`;
 
     if (alertOnMissingBlob) {
-        if (args.options.criticalCount > entities.length) {
+        if (args.options.criticalCount >= entries.length) {
             plugin.nagiosExit(plugin.states.CRITICAL, outputMessage);
-        } else if (args.options.warningCount > entities.length) {
+        } else if (args.options.warningCount >= entries.length) {
             plugin.nagiosExit(plugin.states.WARNING, outputMessage);
         }
     } else {
-        if (args.options.criticalCount < entities.length) {
+        if (args.options.criticalCount <= entries.length) {
             plugin.nagiosExit(plugin.states.CRITICAL, outputMessage);
-        } else if (args.options.warningCount < entities.length) {
+        } else if (args.options.warningCount <= entries.length) {
             plugin.nagiosExit(plugin.states.WARNING, outputMessage);
         }
     }
