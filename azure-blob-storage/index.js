@@ -59,7 +59,7 @@ async function run() {
     }      
 
     const alertOnMissingBlob = args.options.criticalCount < args.options.warningCount;
-    const outputMessage = `Found *${entries.length}* blobs with *${args.options.filePrefix}* prefix that modified in the last *${args.options.daysBack}* days`;
+    const outputMessage = `Found *${entries.length}* blobs matching pattern that modified in the last *${args.options.daysBack}* days`;
 
     if (alertOnMissingBlob) {
         if (args.options.criticalCount >= entries.length) {
