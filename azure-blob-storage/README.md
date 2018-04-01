@@ -1,4 +1,4 @@
-#Description
+# Description
 Check that a given container contains files that were updated in the last X days
 
 # Prerequisites
