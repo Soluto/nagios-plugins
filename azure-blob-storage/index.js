@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const azure = require('azure-storage');
 const getOpt = require('node-getopt');
 const moment = require('moment');
