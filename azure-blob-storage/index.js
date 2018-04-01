@@ -32,7 +32,7 @@ function verify_args(_args) {
 
 verify_args([args.options.storageAccount, args.options.container, args.options.token, args.options.filePrefix, args.options.daysBack, args.options.criticalCount, args.options.warningCount])
 
-const promsifiedListBlobsSegmentedWithPrefix = async (blobService, container, filePrefix, continuationToken) => {
+const promsifiedListBlobsSegmentedWithPrefix = (blobService, container, filePrefix, continuationToken) => {
     return new Promise((resolve, reject) => {
         blobService.listBlobsSegmentedWithPrefix(args.options.container, args.options.filePrefix, continuationToken, (err, result) => {
             if (err) {
