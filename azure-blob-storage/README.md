@@ -11,7 +11,7 @@ $ npm install
 
 ## Usage
  ```sh
-$ node app.js [Options] -- <api_key> <api_secret> <funnel_id>
+$ node index.js [Options]
 ```
 
 ### Options
