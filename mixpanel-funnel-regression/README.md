@@ -22,10 +22,10 @@ $ node app.js [Options] -- <api_key> <api_secret> <funnel_id>
 - -w,   --warning=NUMBER    Warning threshold. The default value is 85
 - -c,   --critical=NUMBER   Critical threshold. The default value is 70
 - -s,   --step=NUMBER+      Step indexes to check, default is last step
-- -o,   --overall-ratio     use overall ratio instead of step ratio
+- -r,   --overall-ratio     use overall ratio instead of step ratio
 - -h,   --help              display this help
 
 ### Example
 ```
-Mixpanel-funnel-regression/app.js '-i' '14' '-o' '14' '-w' '5' '-c' '10' -s '2' -- 'SOME_API_KEY' 'SOME_API_SECRET' 'SOME_FUNNEL_ID'
+mixpanel-funnel-regression/app.js '-i' '14' '-o' '14' '-w' '5' '-c' '10' -s '2' -- 'SOME_API_KEY' 'SOME_API_SECRET' 'SOME_FUNNEL_ID'
 ```
