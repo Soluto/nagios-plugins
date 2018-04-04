@@ -27,5 +27,5 @@ $ node app.js [Options] -- <api_key> <api_secret> <funnel_id>
 
 ### Example
 ```
-mixpanel-funnel/app.js '-i' '14' '-o' '14' '-w' '5' '-c' '10' -s '2' -- 'SOME_API_KEY' 'SOME_API_SECRET' 'SOME_FUNNEL_ID'
+Mixpanel-funnel-regression/app.js '-i' '14' '-o' '14' '-w' '5' '-c' '10' -s '2' -- 'SOME_API_KEY' 'SOME_API_SECRET' 'SOME_FUNNEL_ID'
 ```
