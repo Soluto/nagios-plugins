@@ -7,7 +7,7 @@ const getOpt = require('node-getopt')
         , ['o', 'offset=<NUMBER>', 'The number of days you want to look back to compare your interval result. The default value is 7.']
         , ['w', 'warning=<NUMBER>', 'Warning threshold. The default value is 5']
         , ['c', 'critical=<NUMBER>', 'Critical threshold. The default value is 10']
-        , ['s', 'step=<NUMBER>', 'Step indexes to check, default is last step']
+        , ['s', 'step=<NUMBER>+', 'Step indexes to check, default is last step']
         , ['r', 'overall-ratio', 'use overall ratio instead of step ratio']
         , ['h', 'help', 'display this help']])
     .bindHelp();

@@ -1,14 +1,12 @@
 # Mixpanel-funnel-regression
-The following script samples a given funnel in 2 different intervals and checks for regression (lower completion rate between the intervals)
-The script will compare between current interval to a previous interval with the given offset.
-
+The following script samples a given Mixpanel funnel in 2 different intervals and checks for potential regression based on the offset of the two.
 
 ## Prerequisites
 You  should have Node.js installed.
 
 ## Installation
 ```sh
-$ npm install
+$ yarn
 ```
 
 ## Usage
