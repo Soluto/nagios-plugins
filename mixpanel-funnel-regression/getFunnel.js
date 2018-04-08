@@ -2,7 +2,7 @@ const dateFormat = require('dateformat');
 
 const getFunnel = (panel, funnel_id, offset, interval) => {
     let dateTo = new Date();
-    dateTo.setDate(dateTo.getDate() - offset);
+    dateTo.setDate(dateTo.getDate() - offset - 1);
     const dateFrom = new Date(dateTo);
     dateFrom.setDate(dateFrom.getDate() - interval);
 
