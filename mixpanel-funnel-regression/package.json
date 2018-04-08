@@ -1,0 +1,10 @@
+{
+    "name": "mixpanel-funnel-regression",
+    "version": "0.0.1",
+    "dependencies": {
+        "dateformat": "^1.0.12",
+        "mixpanel-data-export": "^2.0.2",
+        "nagios-plugin": "^0.1.2",
+        "node-getopt": "^0.2.3"
+    }
+}
