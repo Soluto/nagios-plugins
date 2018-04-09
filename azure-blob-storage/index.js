@@ -80,5 +80,5 @@ async function run() {
 }
 
 run()
-    .then(foundEntities => plugin.nagiosExit(plugin.states.OK, `Found ${foundEntities} matching blobs matching pattern`))
+    .then(foundEntities => plugin.nagiosExit(plugin.states.OK, `Found ${foundEntities} blobs matching pattern`))
     .catch(err => plugin.nagiosExit(plugin.states.UNKNOWN, err));
