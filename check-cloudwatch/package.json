@@ -1,0 +1,28 @@
+{
+  "name": "check-cloudwatch",
+  "version": "1.0.0",
+  "description": "Nagios plugin to monitor Cloudwatch metrics, with support for Metric Math Expressions",
+  "main": "check_cloudwatch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Soluto/nagios-plugins.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Soluto/nagios-plugins/issues"
+  },
+  "homepage": "https://github.com/Soluto/nagios-plugins/check-cloudwatch#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.37.0",
+    "commander": "^8.2.0",
+    "nagios-plugin": "^0.1.2"
+  }
+}
