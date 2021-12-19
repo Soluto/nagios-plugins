@@ -17,6 +17,9 @@
     "url": "https://github.com/Soluto/nagios-plugins/issues"
   },
   "homepage": "https://github.com/Soluto/nagios-plugins/check-cloudwatch#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "dependencies": {
     "@aws-sdk/client-cloudwatch": "^3.37.0",
     "commander": "^8.2.0",
