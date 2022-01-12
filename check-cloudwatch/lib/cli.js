@@ -19,7 +19,7 @@ function parseCliOptions() {
     .version('1.0.0')
     .option('-w, --warning <threshold>', 'warning threshold')
     .option('-c, --critical <threshold>', 'critical threshold')
-    .option('-m, --metric-data-queries <JSON string>', 'MetricDataQueries as expected by the Cloudwatch GetMetricData command')
+    .option('-m, --metric-data-queries <JSON string>', 'MetricDataQueries as expected by the Cloudwatch GetMetricData command. An array of MetricDataQuery objects as documented by AWS: https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDataQuery.html')
     .option('-i, --result-metric-id <id>', 'the id of the MetricDataQuery to use for the result')
     .option('-r, --region <region>', 'AWS region')
     .parse()
