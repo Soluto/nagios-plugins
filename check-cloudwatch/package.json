@@ -23,6 +23,7 @@
   "dependencies": {
     "@aws-sdk/client-cloudwatch": "^3.37.0",
     "commander": "^8.2.0",
+    "js-yaml": "^4.1.0",
     "nagios-plugin": "^0.1.2"
   }
 }
