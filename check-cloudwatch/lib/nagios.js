@@ -8,8 +8,8 @@ class Nagios {
   }
 
   setThresholds(warning, critical) {
-    warning = addNegativeInfinitySupportToRange(warning)
-    critical = addNegativeInfinitySupportToRange(critical)
+    warning = normalizeRange(warning)
+    critical = normalizeRange(critical)
     this.plugin.setThresholds({ warning, critical })
   }
 
@@ -26,8 +26,21 @@ class Nagios {
 
 export default new Nagios()
 
+function normalizeRange(range) {
+  range = fixZeroInclusiveRange(range)
+  range = addNegativeInfinitySupportToRange(range)
+
+  return range
+}
+
 function addNegativeInfinitySupportToRange(range) {
   return range.startsWith('~')
     ? range.replace('~', Number.NEGATIVE_INFINITY)
+    : range
+}
+
+function fixZeroInclusiveRange(range) {
+  return range === '@0:0'
+    ? '@0'
     : range
 }
