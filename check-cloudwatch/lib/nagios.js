@@ -8,6 +8,8 @@ class Nagios {
   }
 
   setThresholds(warning, critical) {
+    warning = addNegativeInfinitySupportToRange(warning)
+    critical = addNegativeInfinitySupportToRange(critical)
     this.plugin.setThresholds({ warning, critical })
   }
 
@@ -23,3 +25,9 @@ class Nagios {
 }
 
 export default new Nagios()
+
+function addNegativeInfinitySupportToRange(range) {
+  return range.startsWith('~')
+    ? range.replace('~', Number.NEGATIVE_INFINITY)
+    : range
+}
