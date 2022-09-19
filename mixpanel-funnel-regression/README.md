@@ -2,7 +2,7 @@
 The following script samples a given Mixpanel funnel in 2 different intervals and checks for potential regression based on the offset of the two.
 
 ## Prerequisites
-You  should have Node.js installed.
+You should have Node.js installed.
 
 ## Installation
 ```sh

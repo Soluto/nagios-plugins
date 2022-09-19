@@ -1,5 +1,8 @@
-# Prerequisites
-You  should have Node.js installed.
+# Mixpanel-funnel
+Gets the results of a Mixpanel funnel and compares the results of each step to the thresholds. Can also optionally use the overall ratio instead of the step ratio.
+
+## Prerequisites
+You should have Node.js installed.
 
 ## Installation
 ```sh
