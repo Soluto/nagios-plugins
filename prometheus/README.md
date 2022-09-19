@@ -18,12 +18,12 @@ $ node index.js [options] <query>
 ```
 
 ### Options
--V, --version                          output the version number
--e, --endpoint <prometheus_endpoint>   Prometheus endpoint (required)
--w, --warning <warning>                Warning threshold (default: 0)
--c, --critical <critical>              Critical threshold (default: 0)
--u, --unit                             Metric unit - display only (optional)
--t, --time <rfc3339 | unix_timestamp>  Evaluation timestamp (optional)
+-V, --version                          output the version number  
+-e, --endpoint <prometheus_endpoint>   Prometheus endpoint (required)  
+-w, --warning <warning>                Warning threshold (default: 0)  
+-c, --critical <critical>              Critical threshold (default: 0)  
+-u, --unit                             Metric unit - display only (optional)  
+-t, --time <rfc3339 | unix_timestamp>  Evaluation timestamp (optional)  
 -h, --help                             output usage information
 
 ### Example

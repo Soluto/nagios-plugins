@@ -5,3 +5,4 @@
 - [Check Cloudwatch](check-cloudwatch/README.md)
 - [Mixpanel Funnel](mixpanel-funnel/README.md)
 - [Mixpanel Funnel Regression](mixpanel-funnel-regression/README.md)
+- [Prometheus Check](prometheus/README.md)
